@@ -1,0 +1,31 @@
+network_environment_assumptions:
+  multi_vendor_environment:
+    description: "Devices from several vendors, including iOS, Junos, and eos."
+
+  out_of_band_network:
+    description: "Includes an out-of-band (OOB) management network on the 9. subnet."
+    initial_access: "Devices initially accessible only via this OOB network."
+
+  out_of_the_box_device_configurations:
+    description: "New networking hardware comes with default SSH and Netconf configurations."
+    initial_connection: "Utilizes these default configurations for initial access."
+
+  ssh_jump_server_requirement:
+    description: "All remote access into the data center must go through an SSH jump server."
+    purpose: "Essential for secure access and device management."
+
+  no_preconfigured_snmp:
+    description: "Simple Network Management Protocol (SNMP) is not configured on devices."
+    impact: "Affects initial device access and management approach."
+
+  in_band_network_transition:
+    description: "Includes establishing connections to the 10. in-band network."
+    transition_process: "Devices will move from OOB to in-band management."
+
+  process_for_adding_new_devices:
+    onsite_setup: 
+      description: "Onsite network engineer sets up new hardware and connects it to the network."
+    remote_management:
+      description: "Remote network engineer updates hosts file, runs Ansible for inventorying, deploying configurations, testing, and rollback."
+    ci_data_store_update:
+      description: "Collect information to update Configuration Item (CI) data store."

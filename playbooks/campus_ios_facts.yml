@@ -1,0 +1,19 @@
+---
+- name: Gather Device Facts
+  hosts: ios
+  gather_facts: false
+  connection: netconf 
+  tasks:
+    - name: "IOS Device Facts"
+      cisco.ios.ios_facts:
+
+      
+        gather_subset: all
+      register: device_facts_output
+      when: ansible_network_os == 'ios'
+      
+    - name: "Save Facts to File for {{ inventory_hostname }}"
+      delegate_to: localhost
+      copy:
+        content: "{{ device_facts_output | to_nice_json }}"
+        dest: "~/Documents/grahams_automated_network/documentation/campus/recon_ouput/{{ inventory_hostname }}/{{ inventory_hostname }}_facts/{{ inventory_hostname }}_facts_output.json"
