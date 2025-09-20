@@ -1,0 +1,19 @@
+---
+- name: Test Command Execution on Cisco IOS Device
+  hosts: ios
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: Ping Test
+      ping:
+    
+    - name: Execute 'show version' on Cisco IOS Device
+      cisco.ios.ios_command:
+        commands:
+          - show version
+      register: output
+
+    - name: Display the command output
+      debug:
+        var: output

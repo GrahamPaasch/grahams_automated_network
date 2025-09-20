@@ -1,0 +1,14 @@
+- name: Configure Juniper Device
+  hosts: juniper_devices
+  gather_facts: false
+  connection: network_cli   # SSH connection
+  tasks:
+    - name: Enable NETCONF
+      junipernetworks.junos.junos_config:
+        lines:
+          - "set system services netconf ssh"
+      register: response
+
+    - name: Show response
+      debug:
+        var: response

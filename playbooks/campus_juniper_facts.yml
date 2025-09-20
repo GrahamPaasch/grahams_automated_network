@@ -1,0 +1,17 @@
+---
+- name: Gather Device Facts
+  hosts: junos
+  gather_facts: false
+  connection: netconf 
+  tasks:
+    - name: "JUNOS Device Facts"
+      junipernetworks.junos.junos_facts:
+        gather_subset: all
+      register: device_facts_output
+      when: ansible_network_os == 'junos'
+
+    - name: "Save Facts to File for {{ inventory_hostname }}"
+      delegate_to: localhost
+      copy:
+        content: "{{ device_facts_output | to_nice_json }}"
+        dest: "~/Documents/grahams_automated_network/documentation/juniper/{{ inventory_hostname }}_facts.json"
